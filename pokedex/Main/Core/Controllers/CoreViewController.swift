@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  CoreViewController.swift
 //  pokedex
 //
 //  Created by Juliana Prado on 12/10/22.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class CoreViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
