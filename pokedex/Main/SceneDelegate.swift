@@ -22,11 +22,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.rootViewController = nav
         
         self.window = window
-        self.window?.overrideUserInterfaceStyle = .dark
+        self.window?.overrideUserInterfaceStyle = .light
         window.makeKeyAndVisible()
-        
         coordinator = MainCoordinator(navigationController: nav)
-        coordinator?.start()
+//        coordinator?.startLoadingScreen()
+        coordinator?.startPokemonList()
         
     }
 

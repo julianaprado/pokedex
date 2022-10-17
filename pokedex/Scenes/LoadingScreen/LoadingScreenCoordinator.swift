@@ -10,12 +10,15 @@ import UIKit
 
 class LoadingScreenCoordinator: Coordinator {
     
+    weak var parentCoordinator: MainCoordinator?
     var children: [Coordinator] = []
     
     var nav: UINavigationController
     
+    
     init(navigationController nv: UINavigationController){
         self.nav = nv
+
     }
     
     func start() {
@@ -25,7 +28,21 @@ class LoadingScreenCoordinator: Coordinator {
     }
     
     func finish() {
+        self.parentCoordinator?.startPokemonList()
+        self.parentCoordinator?.childDidFinish(self)
+    }
+    
+}
+
+extension LoadingScreenCoordinator: LoadingProtocol {
+   
+    func finishedLoadingPokedex(status: State) {
+
         
+    }
+    
+    func getPokemon(){
+//        pokedex?.getPokemon()
     }
     
     

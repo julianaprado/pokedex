@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 
 class PokemonListCoordinator: Coordinator {
+    
+    weak var parentCoordinator: MainCoordinator?
     var children: [Coordinator] = []
     
     var nav: UINavigationController
@@ -19,6 +21,7 @@ class PokemonListCoordinator: Coordinator {
     
     func start() {
         let vc = PokemonListViewController()
+        nav.navigationItem.hidesBackButton = true
         vc.coordinator = self
         nav.pushViewController(vc, animated: false)
     }

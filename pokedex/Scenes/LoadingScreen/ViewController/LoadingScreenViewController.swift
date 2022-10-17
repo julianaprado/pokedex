@@ -10,10 +10,31 @@ import UIKit
 
 class LoadingScreenViewController: UIViewController {
     
+    let modelView = LoadingScreenModelView()
     weak var coordinator: LoadingScreenCoordinator?
+    var results: [Pokemon] = []
+    var pokemons: [IndividualPokemon] = []
     
     override func viewDidLoad() {
-        self.view = LoadingView()
+        super.viewDidLoad()
+        self.view = self.modelView.getView()
+        navigationItem.hidesBackButton = true
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+       
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if let view = self.view as? LoadingView {
+            view.gifView.stopAnimating()
+        }
     }
     
 }
