@@ -1,14 +1,14 @@
 //
-//  PokemonListCoordinator.swift
+//  PokemonDetailsCoordnator.swift
 //  pokedex
 //
-//  Created by Juliana Prado on 12/10/22.
+//  Created by Juliana Prado on 17/10/22.
 //
 
 import Foundation
 import UIKit
 
-class PokemonListCoordinator: Coordinator {
+class PokemonDetailsCoordnator: Coordinator {
     
     weak var parentCoordinator: MainCoordinator?
     var children: [Coordinator] = []
@@ -19,18 +19,20 @@ class PokemonListCoordinator: Coordinator {
         self.nav = nv
     }
     
-    func start() {
-        let vc = PokemonListViewController()
+    func start(pokemon: IndividualPokemon) {
+        let vc = PokemonDetailsViewController(pokemon: pokemon)
         nav.navigationItem.hidesBackButton = true
         vc.coordinator = self
-        nav.pushViewController(vc, animated: false)
+        nav.present(vc, animated: true)
     }
+    
+    func start(){
         
-    func finish(pokemon: IndividualPokemon) {
-        self.parentCoordinator?.startPokemonDetailsScreen(pokemon: pokemon)
     }
     
     func finish() {
         
     }
+    
+    
 }

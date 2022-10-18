@@ -11,7 +11,7 @@ import UIKit
 class PokemonListViewModel: NSObject {
     
     weak var viewController: PokemonListViewController?
-    var results : [Pokemon] = []
+    var results: [Pokemon] = []
     var pokemons: [IndividualPokemon] = []
     var apiStatus = State.loading {
         didSet{
@@ -27,7 +27,6 @@ class PokemonListViewModel: NSObject {
         self.viewController = viewController
         super.init()
         
-        self.viewController?.viewModelDelegate = self
         self.view.collectionView.delegate = self
         self.view.collectionView.dataSource = self
         
@@ -56,20 +55,9 @@ class PokemonListViewModel: NSObject {
                
             }
         dispatchGroup.notify(queue: .main) {
-            print(self.pokemons)
             self.apiStatus = .loaded
         }
         
-    }
-    
-    func capitalizingFirstLetter(name: String) -> String {
-        return name.prefix(1).uppercased() + name.lowercased().dropFirst()
-    }
-    
-    func applyMaskToPokemonId(with id: Int) -> String {
-        let idAsString = String(id)
-        let mask = "#000"
-        return mask.dropLast(idAsString.count) + idAsString
     }
     
 }
@@ -89,8 +77,8 @@ extension PokemonListViewModel: UICollectionViewDelegate, UICollectionViewDataSo
         let cell = self.view.collectionView.dequeueReusableCell(withReuseIdentifier: PokemonCell.identifier, for: indexPath) as? PokemonCell
         let pokemon = pokemons[indexPath.row]
         cell?.setupCell(pokemonType: pokemon.types,
-                        pokemonId: applyMaskToPokemonId(with: pokemon.id),
-                        pokemonName: capitalizingFirstLetter(name: pokemon.name)
+                        pokemonId: PokemonPropertiesFunctions.applyMaskToPokemonId(with: pokemon.id),
+                        pokemonName: PokemonPropertiesFunctions.capitalizingFirstLetter(name: pokemon.name)
         )
         PokedexApiManager.shared.fetchPokemonImage(url: pokemon.sprites.other.officialArtwork.frontDefault) { data in
             if let data = data {
@@ -109,6 +97,10 @@ extension PokemonListViewModel: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.viewController?.coordinator?.finish(pokemon: pokemons[indexPath.row])
     }
     
 }

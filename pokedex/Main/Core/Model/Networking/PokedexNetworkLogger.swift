@@ -13,7 +13,7 @@ class PokedexNetworkLogger: EventMonitor {
     let queue = DispatchQueue(label: StringConstants.dispatchQueue)
     
     func requestDidFinish(_ request: Request) {
-        print(request.description)
+//        print(request.description)
     }
 
     func request<Value>(
@@ -25,7 +25,7 @@ class PokedexNetworkLogger: EventMonitor {
         }
         if let json = try? JSONSerialization
             .jsonObject(with: data, options: .mutableContainers) {
-            print(json)
+//            print(json)
         }
     }
 }

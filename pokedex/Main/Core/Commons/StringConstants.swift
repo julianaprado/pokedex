@@ -14,4 +14,6 @@ struct StringConstants {
     static let pokemonListCellReusibleIdentifier = "pokemonListCell"
     
     static let dispatchQueue = "com.julianaprado.pokedex"
+    
+    static let pokemonDetailsCellReusibleIdentifier = "pokemonDetailsCell"
 }

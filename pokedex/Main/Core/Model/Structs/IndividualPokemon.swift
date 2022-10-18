@@ -15,6 +15,7 @@ struct IndividualPokemon: Decodable {
     let types: [PokemonTypes]
     let sprites: PkmnImage
     let id: Int
+    let species: Specie
     
     enum CodingKeys: String, CodingKey{
         case abilities
@@ -24,6 +25,7 @@ struct IndividualPokemon: Decodable {
         case types
         case sprites
         case id
+        case species
     }
     
 }

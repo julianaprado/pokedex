@@ -11,7 +11,6 @@ import UIKit
 class PokemonListViewController: UIViewController {
 
     fileprivate var viewModel: PokemonListViewModel?
-    weak var viewModelDelegate: PokemonListViewModelDelegate?
     weak var coordinator: PokemonListCoordinator?
     
     init(){

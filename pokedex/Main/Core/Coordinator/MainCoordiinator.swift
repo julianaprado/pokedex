@@ -11,7 +11,6 @@ import UIKit
 class MainCoordinator: NSObject, Coordinator, UINavigationControllerDelegate {
     
     var children = [Coordinator]()
-//    var pokedex = PokedexNetworking()
     var nav: UINavigationController
     
     init(navigationController nv: UINavigationController){
@@ -32,6 +31,14 @@ class MainCoordinator: NSObject, Coordinator, UINavigationControllerDelegate {
         pokemonList.parentCoordinator = self
         children.append(pokemonList)
         pokemonList.start()
+    }
+    
+    func startPokemonDetailsScreen(pokemon: IndividualPokemon){
+        nav.delegate = self
+        let pokemonList = PokemonDetailsCoordnator(navigationController: nav)
+        pokemonList.parentCoordinator = self
+        children.append(pokemonList)
+        pokemonList.start(pokemon: pokemon)
     }
     
     func start() {
