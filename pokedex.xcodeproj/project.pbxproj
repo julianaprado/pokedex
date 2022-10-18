@@ -67,6 +67,7 @@
 		DBBC8B6E28FE3F1F00A25DFE /* PokemonAbilityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBC8B6D28FE3F1F00A25DFE /* PokemonAbilityView.swift */; };
 		DBBC8B7228FE4A5600A25DFE /* AbilityEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBC8B7128FE4A5600A25DFE /* AbilityEntry.swift */; };
 		DBBC8B7628FF1B5600A25DFE /* PokemonStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBC8B7528FF1B5600A25DFE /* PokemonStatusView.swift */; };
+		DBBC8B7928FF293300A25DFE /* PokemonEvolutionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBC8B7828FF293300A25DFE /* PokemonEvolutionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -150,6 +151,7 @@
 		DBBC8B6D28FE3F1F00A25DFE /* PokemonAbilityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonAbilityView.swift; sourceTree = "<group>"; };
 		DBBC8B7128FE4A5600A25DFE /* AbilityEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbilityEntry.swift; sourceTree = "<group>"; };
 		DBBC8B7528FF1B5600A25DFE /* PokemonStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonStatusView.swift; sourceTree = "<group>"; };
+		DBBC8B7828FF293300A25DFE /* PokemonEvolutionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonEvolutionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -477,6 +479,7 @@
 		DBBC8B4B28FDDA5600A25DFE /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DBBC8B7728FF292600A25DFE /* EvolutionView */,
 				DBBC8B7428FF1B4200A25DFE /* StatsView */,
 				DBBC8B7328FF1B2800A25DFE /* Common */,
 				DBBC8B7028FE3F2F00A25DFE /* AboutView */,
@@ -541,6 +544,14 @@
 				DBBC8B7528FF1B5600A25DFE /* PokemonStatusView.swift */,
 			);
 			path = StatsView;
+			sourceTree = "<group>";
+		};
+		DBBC8B7728FF292600A25DFE /* EvolutionView */ = {
+			isa = PBXGroup;
+			children = (
+				DBBC8B7828FF293300A25DFE /* PokemonEvolutionView.swift */,
+			);
+			path = EvolutionView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -729,6 +740,7 @@
 				DB4D3A5628F8A26000B472F9 /* IconColors.swift in Sources */,
 				DBBC8B5928FDF62100A25DFE /* PokemonPropertiesFunctions.swift in Sources */,
 				DB4D3A2628F7633100B472F9 /* UIViewLayout.swift in Sources */,
+				DBBC8B7928FF293300A25DFE /* PokemonEvolutionView.swift in Sources */,
 				DBBC8B5428FDDB6200A25DFE /* PokemonDetailsView.swift in Sources */,
 				DBBC8B6E28FE3F1F00A25DFE /* PokemonAbilityView.swift in Sources */,
 				DBBC8B5228FDDB1300A25DFE /* PokemonDetailsModelView.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  PokemonStatusView.swift
+//  PokemonEvolutionView.swift
 //  pokedex
 //
 //  Created by Juliana Prado on 18/10/22.
@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class PokemonStatusView: UIView{
+class PokemonEvolutionView: UIView{
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,7 +22,7 @@ class PokemonStatusView: UIView{
     
 }
 
-extension PokemonStatusView: UIViewLayout {
+extension PokemonEvolutionView: UIViewLayout {
     
     func setupHierarchy() {
         

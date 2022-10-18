@@ -14,6 +14,10 @@ extension UIColor {
         return UIColor(red: 0.95, green: 0.96, blue: 0.96, alpha: 1.00)
     }()
     
+    static let lightWhite: UIColor = {
+        return UIColor(red: 1, green: 1, blue: 1, alpha: 0.50)
+    }()
+    
     static let bug: UIColor = {
         return UIColor(red: 0.57, green: 0.74, blue: 0.17, alpha: 1.00)
     }()

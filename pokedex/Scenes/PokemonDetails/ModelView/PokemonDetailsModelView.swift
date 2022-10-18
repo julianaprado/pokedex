@@ -67,7 +67,7 @@ extension PokemonDetailsModelView: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.view.collectionView.bounds.width, height: 200)
+        return CGSize(width: self.view.collectionView.bounds.width, height: 150)
        }
     
 }
