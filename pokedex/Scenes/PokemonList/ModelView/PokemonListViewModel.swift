@@ -11,7 +11,7 @@ import UIKit
 class PokemonListViewModel: NSObject {
     
     weak var viewController: PokemonListViewController?
-    var results: [Pokemon] = []
+    var results: Results?
     var pokemons: [IndividualPokemon] = []
     var apiStatus = State.loading {
         didSet{
@@ -29,6 +29,8 @@ class PokemonListViewModel: NSObject {
         
         self.view.collectionView.delegate = self
         self.view.collectionView.dataSource = self
+        self.view.searchBar.delegate = self
+        
         
         
     }
@@ -37,16 +39,17 @@ class PokemonListViewModel: NSObject {
         return self.view
     }
     
-    func fectchData(){
-        PokedexApiManager.shared.searchResults{ [self] results in
+    func fetchData(){
+        PokedexApiManager.shared.getResults{ [self] results in
             self.results = results
-            fetchPokemons()
+            guard let pokemon = self.results?.results else { return }
+            fetchPokemons(results: pokemon)
         }
     }
     
-    func fetchPokemons(){
+    func fetchPokemons(results: [Pokemon]){
         let dispatchGroup = DispatchGroup()
-            for pokemon in self.results {
+            for pokemon in results {
                 dispatchGroup.enter()
                 PokedexApiManager.shared.fetchPokemon(url: pokemon.url) { [self] individualPokemon in
                     self.pokemons.append(individualPokemon)
@@ -55,6 +58,7 @@ class PokemonListViewModel: NSObject {
                
             }
         dispatchGroup.notify(queue: .main) {
+            self.pokemons = self.pokemons.sorted(by: { $0.id < $1.id })
             self.apiStatus = .loaded
         }
         
@@ -67,7 +71,11 @@ extension PokemonListViewModel: PokemonListViewModelDelegate {
 }
 
 
-extension PokemonListViewModel: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension PokemonListViewModel: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        
+    }
+    
         
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
        return pokemons.count
@@ -100,7 +108,70 @@ extension PokemonListViewModel: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.view.searchBar.resignFirstResponder()
         self.viewController?.coordinator?.finish(pokemon: pokemons[indexPath.row])
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        viewController?.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool){
+        viewController?.navigationController?.setNavigationBarHidden(true, animated: true)
+        let offsetY = scrollView.contentOffset.y
+        let height = scrollView.contentSize.height
+        
+        if offsetY > height - scrollView.frame.size.height {
+            guard let next = results?.next else { return }
+            PokedexApiManager.shared.fechNextBatch(url: next, completion: { results in
+                self.results = results
+                self.fetchPokemons(results: results.results)
+                self.view.collectionView.reloadData()
+            })
+        }
+    }
+    
+}
+
+extension PokemonListViewModel: UITextFieldDelegate {
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.view.searchBar.resignFirstResponder()
+        self.view.placeholderLabel.textColor = .gray
+        if pokemons.count <= 1 {
+            self.pokemons.removeAll()
+            fetchData()
+        }
+
+        
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard let text = self.view.searchBar.text else { return false }
+        var notSuccess = false
+        if text.count != 0 {
+            PokedexApiManager.shared.searchPokemon(query: text) { pokemon in
+                self.pokemons.removeAll()
+                self.pokemons.append(pokemon)
+                self.view.collectionView.reloadData()
+                self.view.searchBar.text = ""
+                self.view.noPokemonFoundLabel.textColor = .clear
+                notSuccess = true
+            }
+            
+            if !notSuccess {
+                self.view.noPokemonFoundLabel.textColor = .black
+                self.pokemons.removeAll()
+                self.view.collectionView.reloadData()
+                self.view.searchBar.text = ""
+            }
+        }
+        return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        self.view.searchBar.becomeFirstResponder()
+        self.view.placeholderLabel.textColor = .darkWhite
     }
     
 }

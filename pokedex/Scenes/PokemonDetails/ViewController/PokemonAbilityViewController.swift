@@ -28,15 +28,14 @@ class PokemonAbilityViewController: UIViewController {
         self.view = PokemonAbilityView()
         let v = self.view as? PokemonAbilityView
         
+        
         PokedexApiManager.shared.fechDescription(url: ability?.url ?? "", completion: { AbilityEntry in
-            let language1 = AbilityEntry.effectEntries[0].language.name
-            let language2 = AbilityEntry.effectEntries[1].language.name
-            if language1 == "en"{
-                v?.setupDescription(description: AbilityEntry.effectEntries[0].effect)
-            } else {
-                v?.setupDescription(description: AbilityEntry.effectEntries[1].effect)
+            for language in AbilityEntry.effectEntries{
+                if language.language.name == "en"{
+                    v?.setupDescription(description: language.effect)
+                    break
+                }
             }
-                
         })
     }
     

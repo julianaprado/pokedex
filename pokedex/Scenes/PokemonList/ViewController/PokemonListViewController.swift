@@ -25,11 +25,12 @@ class PokemonListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.hidesBackButton = true
+        navigationController?.navigationBar.isHidden = true
         guard let model = viewModel else {
             return
         }
         self.view = model.getView()
-        self.viewModel?.fectchData()
+        self.viewModel?.fetchData()
     }
     
     override func viewWillAppear(_ animated: Bool) {

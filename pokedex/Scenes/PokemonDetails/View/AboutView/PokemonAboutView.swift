@@ -29,7 +29,6 @@ class PokemonAboutView: UIView {
         label.textAlignment = .left
         label.numberOfLines = 0
         label.textColor = .gray
-//        label.sizeToFit()
         label.adjustsFontSizeToFitWidth = true
         label.font = .systemFont(ofSize: 17)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -94,8 +93,14 @@ class PokemonAboutView: UIView {
     
     func setupAbout(pokemon: IndividualPokemon, species: PokemonSpecies){
         self.ability = pokemon.abilities
-        let text = species.flavorTextEntries[0].flavorText.replacingOccurrences(of: "\n", with: " ")
-        pokemonDescription.text  = text.replacingOccurrences(of: "\u{000c}", with: " ")
+        for s in species.flavorTextEntries {
+            if s.language.name == "en"{
+                let text = s.flavorText.replacingOccurrences(of: "\n", with: " ")
+                pokemonDescription.text  = text.replacingOccurrences(of: "\u{000c}", with: " ")
+                break
+            }
+        }
+        
         
         let pokemonTypeProperties = PokemonPropertiesFunctions.setTypeComponents(withType: pokemon.types[0].type.name)
         
@@ -103,7 +108,11 @@ class PokemonAboutView: UIView {
         pokedexAbilities.textColor = pokemonTypeProperties.0
         
         speciesStat.statLabel.text = "Species"
-        speciesStat.statValueLabel.text = PokemonPropertiesFunctions.capitalizingFirstLetter(name: species.eggGroups[1].name)
+        if species.eggGroups.count == 2 {
+            speciesStat.statValueLabel.text = PokemonPropertiesFunctions.capitalizingFirstLetter(name: species.eggGroups[1].name)
+        } else {
+            speciesStat.statValueLabel.text = PokemonPropertiesFunctions.capitalizingFirstLetter(name: species.eggGroups[0].name)
+        }
         
         weightStat.statLabel.text = "Weight"
         weightStat.statValueLabel.text = String(pokemon.weight) + " kg"
@@ -114,8 +123,11 @@ class PokemonAboutView: UIView {
         abilityOne.statLabel.text = "Ability"
         abilityOne.statValueLabel.text = PokemonPropertiesFunctions.capitalizingFirstLetter(name: pokemon.abilities[0].ability.name)
         
-        abilityTwo.statLabel.text = "Hidden Ability"
-        abilityTwo.statValueLabel.text = PokemonPropertiesFunctions.capitalizingFirstLetter(name: pokemon.abilities[1].ability.name)
+        if pokemon.abilities.count > 1 {
+            abilityTwo.statLabel.text = "Hidden Ability"
+            abilityTwo.statValueLabel.text = PokemonPropertiesFunctions.capitalizingFirstLetter(name: pokemon.abilities[1].ability.name)
+        }
+        
 
     }
  

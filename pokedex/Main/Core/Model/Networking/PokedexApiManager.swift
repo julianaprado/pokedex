@@ -69,7 +69,7 @@ class PokedexApiManager {
             }
     }
     
-    func searchResults(completion: @escaping ([Pokemon]) -> Void) {
+    func getResults(completion: @escaping (Results) -> Void) {
         let url = StringConstants.baseUrl
         sessionManager.request(url)
             .responseDecodable(of: Results.self) { response in
@@ -77,9 +77,9 @@ class PokedexApiManager {
                     
                 case .success(_):
                     guard let items = response.value else {
-                        return completion([])
+                        return
                     }
-                    completion(items.results)
+                    completion(items)
                 case .failure(let error):
                     print(error)
                 }
@@ -121,4 +121,39 @@ class PokedexApiManager {
             }
     }
     
+    func fechNextBatch(url: String, completion: @escaping (Results) -> Void) {
+        sessionManager.request(url)
+            .responseDecodable(of: Results.self) { response in
+                switch response.result {
+                    
+                case .success(_):
+                    guard let items = response.value else {
+                        return
+                    }
+                    completion(items)
+                case .failure(let error):
+                    print(error)
+                }
+                
+            }
+    }
+    
+    func searchPokemon(query: String, completion: @escaping (IndividualPokemon) -> Void) {
+        let url = StringConstants.baseUrl + query.lowercased()
+        sessionManager.request(url)
+            .responseDecodable(of: IndividualPokemon.self) { response in
+                switch response.result {
+                    
+                case .success(_):
+                    guard let items = response.value else {
+                        return
+                    }
+                    completion(items)
+                case .failure(let error):
+                    print(error)
+                }
+                
+            }
+    }
+
 }

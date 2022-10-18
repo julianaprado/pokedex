@@ -50,7 +50,7 @@ extension PokemonDetailsViewController: ModalDelegate {
         nav.modalPresentationStyle = .formSheet
         let smallId = UISheetPresentationController.Detent.Identifier("small")
         let smallDetent = UISheetPresentationController.Detent.custom(identifier: smallId) { context in
-            return 100
+            return 130
         }
         nav.sheetPresentationController?.detents = [smallDetent]
         

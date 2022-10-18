@@ -66,6 +66,7 @@
 		DBBC8B6C28FE3F0F00A25DFE /* PokemonAbilityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBC8B6B28FE3F0F00A25DFE /* PokemonAbilityViewController.swift */; };
 		DBBC8B6E28FE3F1F00A25DFE /* PokemonAbilityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBC8B6D28FE3F1F00A25DFE /* PokemonAbilityView.swift */; };
 		DBBC8B7228FE4A5600A25DFE /* AbilityEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBC8B7128FE4A5600A25DFE /* AbilityEntry.swift */; };
+		DBBC8B7628FF1B5600A25DFE /* PokemonStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBC8B7528FF1B5600A25DFE /* PokemonStatusView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,6 +149,7 @@
 		DBBC8B6B28FE3F0F00A25DFE /* PokemonAbilityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonAbilityViewController.swift; sourceTree = "<group>"; };
 		DBBC8B6D28FE3F1F00A25DFE /* PokemonAbilityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonAbilityView.swift; sourceTree = "<group>"; };
 		DBBC8B7128FE4A5600A25DFE /* AbilityEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbilityEntry.swift; sourceTree = "<group>"; };
+		DBBC8B7528FF1B5600A25DFE /* PokemonStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonStatusView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -475,7 +477,9 @@
 		DBBC8B4B28FDDA5600A25DFE /* View */ = {
 			isa = PBXGroup;
 			children = (
-				DBBC8B7028FE3F2F00A25DFE /* PokemonAbility */,
+				DBBC8B7428FF1B4200A25DFE /* StatsView */,
+				DBBC8B7328FF1B2800A25DFE /* Common */,
+				DBBC8B7028FE3F2F00A25DFE /* AboutView */,
 				DBBC8B6F28FE3F2400A25DFE /* PokemonDetails */,
 			);
 			path = View;
@@ -510,18 +514,33 @@
 			isa = PBXGroup;
 			children = (
 				DBBC8B5328FDDB6200A25DFE /* PokemonDetailsView.swift */,
-				DBBC8B5A28FE096000A25DFE /* PokemonAboutView.swift */,
-				DBBC8B5C28FE12C700A25DFE /* PokemonStatsView.swift */,
 			);
 			path = PokemonDetails;
 			sourceTree = "<group>";
 		};
-		DBBC8B7028FE3F2F00A25DFE /* PokemonAbility */ = {
+		DBBC8B7028FE3F2F00A25DFE /* AboutView */ = {
 			isa = PBXGroup;
 			children = (
 				DBBC8B6D28FE3F1F00A25DFE /* PokemonAbilityView.swift */,
+				DBBC8B5A28FE096000A25DFE /* PokemonAboutView.swift */,
 			);
-			path = PokemonAbility;
+			path = AboutView;
+			sourceTree = "<group>";
+		};
+		DBBC8B7328FF1B2800A25DFE /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				DBBC8B5C28FE12C700A25DFE /* PokemonStatsView.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		DBBC8B7428FF1B4200A25DFE /* StatsView */ = {
+			isa = PBXGroup;
+			children = (
+				DBBC8B7528FF1B5600A25DFE /* PokemonStatusView.swift */,
+			);
+			path = StatsView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -702,6 +721,7 @@
 				DB4D3A5A28F8E38200B472F9 /* LoadingState.swift in Sources */,
 				DBBC8B6C28FE3F0F00A25DFE /* PokemonAbilityViewController.swift in Sources */,
 				DB4D3A5428F89FDB00B472F9 /* Icons.swift in Sources */,
+				DBBC8B7628FF1B5600A25DFE /* PokemonStatusView.swift in Sources */,
 				DB4D3A4628F8726E00B472F9 /* LoadingScreenModelView.swift in Sources */,
 				DBBC8B6A28FE3C9000A25DFE /* ModalDelegate.swift in Sources */,
 				DBBC8B7228FE4A5600A25DFE /* AbilityEntry.swift in Sources */,

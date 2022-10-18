@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct IndividualPokemon: Decodable {
+struct IndividualPokemon: Decodable, Hashable {
+    
     let abilities: [Ability]
     let height: Int
     let weight: Int
@@ -26,6 +27,14 @@ struct IndividualPokemon: Decodable {
         case sprites
         case id
         case species
+    }
+    
+    static func == (lhs: IndividualPokemon, rhs: IndividualPokemon) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
     
 }
