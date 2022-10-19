@@ -70,6 +70,7 @@ class PokedexApiManager {
     }
     
     func getResults(completion: @escaping (Results) -> Void) {
+        
         let url = StringConstants.baseUrl
         sessionManager.request(url)
             .responseDecodable(of: Results.self) { response in

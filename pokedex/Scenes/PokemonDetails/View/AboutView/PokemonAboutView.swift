@@ -35,20 +35,20 @@ class PokemonAboutView: UIView {
         return label
     }()
     
-    lazy var speciesStat: PokemonInfoStruct = {
-        var stat = PokemonInfoStruct()
+    lazy var speciesStat: PokemonInfoStack = {
+        var stat = PokemonInfoStack()
         stat.translatesAutoresizingMaskIntoConstraints = false
         return stat
     }()
     
-    lazy var weightStat: PokemonInfoStruct = {
-        var stat = PokemonInfoStruct()
+    lazy var weightStat: PokemonInfoStack = {
+        var stat = PokemonInfoStack()
         stat.translatesAutoresizingMaskIntoConstraints = false
         return stat
     }()
     
-    lazy var heightStat: PokemonInfoStruct = {
-        var stat = PokemonInfoStruct()
+    lazy var heightStat: PokemonInfoStack = {
+        var stat = PokemonInfoStack()
         stat.translatesAutoresizingMaskIntoConstraints = false
         return stat
     }()
@@ -64,14 +64,14 @@ class PokemonAboutView: UIView {
         return label
     }()
     
-    lazy var abilityOne: PokemonInfoStruct = {
-        var stat = PokemonInfoStruct()
+    lazy var abilityOne: PokemonInfoStack = {
+        var stat = PokemonInfoStack()
         stat.translatesAutoresizingMaskIntoConstraints = false
         return stat
     }()
     
-    lazy var abilityTwo: PokemonInfoStruct = {
-        var stat = PokemonInfoStruct()
+    lazy var abilityTwo: PokemonInfoStack = {
+        var stat = PokemonInfoStack()
        
         stat.translatesAutoresizingMaskIntoConstraints = false
         return stat
@@ -162,7 +162,7 @@ extension PokemonAboutView: UIViewLayout {
         pokemonDescription.topAnchor.constraint(equalTo: self.topAnchor, constant: 30).isActive = true
         pokemonDescription.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 30).isActive = true
 //        pokemonDescription.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        pokemonDescription.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        pokemonDescription.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -30).isActive = true
         
         pokedexData.topAnchor.constraint(equalTo: pokemonDescription.bottomAnchor, constant: 20).isActive = true
         pokedexData.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 30).isActive = true

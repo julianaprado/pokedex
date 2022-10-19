@@ -10,6 +10,10 @@ import UIKit
 
 class PokemonDetailsView: UIView {
 
+    private var pokemon: IndividualPokemon?
+    private var pokemonColor: UIColor?
+    private var species: PokemonSpecies?
+    
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 5
@@ -108,9 +112,12 @@ class PokemonDetailsView: UIView {
     }
     
     func setPokemonDetails(pokemon: IndividualPokemon, species: PokemonSpecies){
+        self.pokemon = pokemon
+        self.species = species
         self.pokemonAboutView.setupAbout(pokemon: pokemon, species: species)
         let pokemonType = pokemon.types
         let pokemonTypeOneProperties = PokemonPropertiesFunctions.setTypeComponents(withType: pokemonType[0].type.name)
+        self.pokemonColor = pokemonTypeOneProperties.0
         
         pokemonDetails.pokemonName.text = PokemonPropertiesFunctions.capitalizingFirstLetter(name:  pokemon.name)
         pokemonDetails.pokemonID.text = PokemonPropertiesFunctions.applyMaskToPokemonId(with: pokemon.id)
@@ -139,6 +146,8 @@ class PokemonDetailsView: UIView {
     @objc
     func openStats(){
         dimLabels()
+        guard let pokemon = self.pokemon, let species = self.species, let pokemonColor = self.pokemonColor else { return }
+        pokemonStatusView.setupStats(pokemon: pokemon, species: species, pokemonColor: pokemonColor)
         stats.textColor = .white
         removeAllButtonsFromSuperView()
         addSubview(pokemonStatusView)

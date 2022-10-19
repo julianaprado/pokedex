@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class PokemonInfoStruct: UIView {
+class PokemonInfoStack: UIView {
     
     lazy var statLabel: UILabel = {
         let label = UILabel()
@@ -58,7 +58,7 @@ class PokemonInfoStruct: UIView {
     
 }
 
-extension PokemonInfoStruct: UIViewLayout {
+extension PokemonInfoStack: UIViewLayout {
     
     func setupHierarchy() {
         statsStack.addArrangedSubview(statLabel)
