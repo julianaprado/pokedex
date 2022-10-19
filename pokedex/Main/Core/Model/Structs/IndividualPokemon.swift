@@ -17,6 +17,7 @@ struct IndividualPokemon: Decodable, Hashable {
     let sprites: PkmnImage
     let id: Int
     let species: Specie
+    let stats: [Stats]
     
     enum CodingKeys: String, CodingKey{
         case abilities
@@ -27,6 +28,7 @@ struct IndividualPokemon: Decodable, Hashable {
         case sprites
         case id
         case species
+        case stats
     }
     
     static func == (lhs: IndividualPokemon, rhs: IndividualPokemon) -> Bool {

@@ -29,7 +29,7 @@ class PokemonAbilityViewController: UIViewController {
         let v = self.view as? PokemonAbilityView
         
         
-        PokedexApiManager.shared.fechDescription(url: ability?.url ?? "", completion: { AbilityEntry in
+        PokedexApiManager.shared.fechDescription(url: ability?.url ?? "", completion: { [weak self] AbilityEntry in
             for language in AbilityEntry.effectEntries{
                 if language.language.name == "en"{
                     v?.setupDescription(description: language.effect)

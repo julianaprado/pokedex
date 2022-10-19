@@ -35,20 +35,20 @@ class PokemonAboutView: UIView {
         return label
     }()
     
-    lazy var speciesStat: PokemonStatsView = {
-        var stat = PokemonStatsView()
+    lazy var speciesStat: PokemonInfoStruct = {
+        var stat = PokemonInfoStruct()
         stat.translatesAutoresizingMaskIntoConstraints = false
         return stat
     }()
     
-    lazy var weightStat: PokemonStatsView = {
-        var stat = PokemonStatsView()
+    lazy var weightStat: PokemonInfoStruct = {
+        var stat = PokemonInfoStruct()
         stat.translatesAutoresizingMaskIntoConstraints = false
         return stat
     }()
     
-    lazy var heightStat: PokemonStatsView = {
-        var stat = PokemonStatsView()
+    lazy var heightStat: PokemonInfoStruct = {
+        var stat = PokemonInfoStruct()
         stat.translatesAutoresizingMaskIntoConstraints = false
         return stat
     }()
@@ -64,14 +64,14 @@ class PokemonAboutView: UIView {
         return label
     }()
     
-    lazy var abilityOne: PokemonStatsView = {
-        var stat = PokemonStatsView()
+    lazy var abilityOne: PokemonInfoStruct = {
+        var stat = PokemonInfoStruct()
         stat.translatesAutoresizingMaskIntoConstraints = false
         return stat
     }()
     
-    lazy var abilityTwo: PokemonStatsView = {
-        var stat = PokemonStatsView()
+    lazy var abilityTwo: PokemonInfoStruct = {
+        var stat = PokemonInfoStruct()
        
         stat.translatesAutoresizingMaskIntoConstraints = false
         return stat

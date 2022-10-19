@@ -20,6 +20,7 @@ class PokemonListViewModel: NSObject {
             }
         }
     }
+    var semaphore = false
     
     private let view = PokemonListView()
     
@@ -30,6 +31,7 @@ class PokemonListViewModel: NSObject {
         self.view.collectionView.delegate = self
         self.view.collectionView.dataSource = self
         self.view.searchBar.delegate = self
+        self.view.delegate = self
         
         
         
@@ -40,10 +42,10 @@ class PokemonListViewModel: NSObject {
     }
     
     func fetchData(){
-        PokedexApiManager.shared.getResults{ [self] results in
-            self.results = results
-            guard let pokemon = self.results?.results else { return }
-            fetchPokemons(results: pokemon)
+        PokedexApiManager.shared.getResults{ [weak self] results in
+            self?.results = results
+            guard let pokemon = self?.results?.results else { return }
+            self?.fetchPokemons(results: pokemon)
         }
     }
     
@@ -51,8 +53,8 @@ class PokemonListViewModel: NSObject {
         let dispatchGroup = DispatchGroup()
             for pokemon in results {
                 dispatchGroup.enter()
-                PokedexApiManager.shared.fetchPokemon(url: pokemon.url) { [self] individualPokemon in
-                    self.pokemons.append(individualPokemon)
+                PokedexApiManager.shared.fetchPokemon(url: pokemon.url) { [weak self] individualPokemon in
+                    self?.pokemons.append(individualPokemon)
                     dispatchGroup.leave()
                 }
                
@@ -67,6 +69,16 @@ class PokemonListViewModel: NSObject {
 }
  
 extension PokemonListViewModel: PokemonListViewModelDelegate {
+    
+    func setSearchBar() {
+        self.view.placeholderLabel.textColor = .gray
+        if pokemons.count <= 1 {
+            self.pokemons.removeAll()
+            fetchData()
+            semaphore = true
+        }
+    }
+    
 
 }
 
@@ -109,7 +121,7 @@ extension PokemonListViewModel: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.view.searchBar.resignFirstResponder()
-        self.viewController?.coordinator?.finish(pokemon: pokemons[indexPath.row])
+        self.viewController?.coordinator?.finish(pokemon: self.pokemons[indexPath.row])
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -123,10 +135,10 @@ extension PokemonListViewModel: UICollectionViewDelegate, UICollectionViewDataSo
         
         if offsetY > height - scrollView.frame.size.height {
             guard let next = results?.next else { return }
-            PokedexApiManager.shared.fechNextBatch(url: next, completion: { results in
-                self.results = results
-                self.fetchPokemons(results: results.results)
-                self.view.collectionView.reloadData()
+            PokedexApiManager.shared.fechNextBatch(url: next, completion: { [weak self] results in
+                self?.results = results
+                self?.fetchPokemons(results: results.results)
+                self?.view.collectionView.reloadData()
             })
         }
     }
@@ -138,24 +150,18 @@ extension PokemonListViewModel: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.view.searchBar.resignFirstResponder()
         self.view.placeholderLabel.textColor = .gray
-        if pokemons.count <= 1 {
-            self.pokemons.removeAll()
-            fetchData()
-        }
-
-        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         guard let text = self.view.searchBar.text else { return false }
         var notSuccess = false
         if text.count != 0 {
-            PokedexApiManager.shared.searchPokemon(query: text) { pokemon in
-                self.pokemons.removeAll()
-                self.pokemons.append(pokemon)
-                self.view.collectionView.reloadData()
-                self.view.searchBar.text = ""
-                self.view.noPokemonFoundLabel.textColor = .clear
+            PokedexApiManager.shared.searchPokemon(query: text) { [weak self] pokemon in
+                self?.pokemons.removeAll()
+                self?.pokemons.append(pokemon)
+                self?.view.collectionView.reloadData()
+                self?.view.searchBar.text = ""
+                self?.view.noPokemonFoundLabel.textColor = .clear
                 notSuccess = true
             }
             

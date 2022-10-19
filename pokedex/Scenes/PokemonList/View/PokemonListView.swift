@@ -10,6 +10,8 @@ import UIKit
 
 class PokemonListView: UIView{
     
+    weak var delegate: PokemonListViewModelDelegate?
+    
     lazy var pokedex: UILabel = {
         var label = UILabel(frame: .zero)
         label.textAlignment = .left
@@ -54,6 +56,7 @@ class PokemonListView: UIView{
         label.numberOfLines = 0
         label.adjustsFontSizeToFitWidth = true
         label.font = .systemFont(ofSize: 17)
+        label.isUserInteractionEnabled = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -111,7 +114,6 @@ class PokemonListView: UIView{
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
         pokedex.addGestureRecognizer(tapGesture)
         descriptionLabel.addGestureRecognizer(tapGesture)
-        backgroundView.addGestureRecognizer(tapGesture)
         self.configureView()
     }
     
@@ -123,6 +125,7 @@ class PokemonListView: UIView{
     @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
         searchBar.resignFirstResponder()
         noPokemonFoundLabel.textColor = .clear
+        self.delegate?.setSearchBar()
     }
     
 }

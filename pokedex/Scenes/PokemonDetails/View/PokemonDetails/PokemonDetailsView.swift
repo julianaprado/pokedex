@@ -35,8 +35,8 @@ class PokemonDetailsView: UIView {
         return view
     }()
     
-    lazy var pokemonStatusView: PokemonStatusView = {
-        let view = PokemonStatusView()
+    lazy var pokemonStatusView: PokemonStatsView = {
+        let view = PokemonStatsView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()

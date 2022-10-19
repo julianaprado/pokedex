@@ -22,8 +22,8 @@ class PokemonDetailsModelView: NSObject {
         self.pokemon = pokemon
         super.init()
         
-        PokedexApiManager.shared.searchSpecies(url: pokemon.species.url) { specie in
-            self.view.setPokemonDetails(pokemon: pokemon, species: specie)
+        PokedexApiManager.shared.searchSpecies(url: pokemon.species.url) { [weak self] specie in
+            self?.view.setPokemonDetails(pokemon: pokemon, species: specie)
         }
         
         let mirror = Swift.Mirror(reflecting: pokemon.sprites)
