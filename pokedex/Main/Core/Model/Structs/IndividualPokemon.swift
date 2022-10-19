@@ -18,6 +18,7 @@ struct IndividualPokemon: Decodable, Hashable {
     let id: Int
     let species: Specie
     let stats: [Stats]
+    let baseExperience: Int
     
     enum CodingKeys: String, CodingKey{
         case abilities
@@ -29,6 +30,7 @@ struct IndividualPokemon: Decodable, Hashable {
         case id
         case species
         case stats
+        case baseExperience = "base_experience"
     }
     
     static func == (lhs: IndividualPokemon, rhs: IndividualPokemon) -> Bool {

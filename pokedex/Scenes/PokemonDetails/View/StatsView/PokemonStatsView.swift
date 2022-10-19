@@ -26,7 +26,6 @@ class PokemonStatsView: UIView{
         label.textAlignment = .left
         label.numberOfLines = 0
         label.textColor = .gray
-        label.adjustsFontSizeToFitWidth = true
         label.font = .systemFont(ofSize: 13)
         label.text = StringConstants.pokemonStatsDescription
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -154,7 +153,6 @@ extension PokemonStatsView: UIViewLayout {
         pokemonDescription.topAnchor.constraint(equalTo: speedStat.bottomAnchor, constant: 30).isActive = true
         pokemonDescription.leftAnchor.constraint(equalTo: baseStat.leftAnchor).isActive = true
         pokemonDescription.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -30).isActive = true
-//        pokemonDescription.bottomAnchor.constraint(equalTo: self.layoutMarginsGuide.bottomAnchor).isActive = true
         
     }
     

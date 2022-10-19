@@ -24,6 +24,17 @@ class PokemonAboutView: UIView {
         return label
     }()
     
+    lazy var trainingData: UILabel = {
+        var label = UILabel(frame: .zero)
+        label.textAlignment = .left
+        label.text = "Training Data"
+        label.sizeToFit()
+        label.adjustsFontSizeToFitWidth = true
+        label.font = .boldSystemFont(ofSize: 23)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     lazy var pokemonDescription: UILabel = {
         var label = UILabel(frame: .zero)
         label.textAlignment = .left
@@ -72,7 +83,24 @@ class PokemonAboutView: UIView {
     
     lazy var abilityTwo: PokemonInfoStack = {
         var stat = PokemonInfoStack()
-       
+        stat.translatesAutoresizingMaskIntoConstraints = false
+        return stat
+    }()
+    
+    lazy var baseExp: PokemonInfoStack = {
+        var stat = PokemonInfoStack()
+        stat.translatesAutoresizingMaskIntoConstraints = false
+        return stat
+    }()
+    
+    lazy var growthRate: PokemonInfoStack = {
+        var stat = PokemonInfoStack()
+        stat.translatesAutoresizingMaskIntoConstraints = false
+        return stat
+    }()
+    
+    lazy var catchRate: PokemonInfoStack = {
+        var stat = PokemonInfoStack()
         stat.translatesAutoresizingMaskIntoConstraints = false
         return stat
     }()
@@ -106,6 +134,7 @@ class PokemonAboutView: UIView {
         
         pokedexData.textColor = pokemonTypeProperties.0
         pokedexAbilities.textColor = pokemonTypeProperties.0
+        trainingData.textColor = pokemonTypeProperties.0
         
         speciesStat.statLabel.text = "Species"
         if species.eggGroups.count == 2 {
@@ -122,12 +151,22 @@ class PokemonAboutView: UIView {
         
         abilityOne.statLabel.text = "Ability"
         abilityOne.statValueLabel.text = PokemonPropertiesFunctions.capitalizingFirstLetter(name: pokemon.abilities[0].ability.name)
+        abilityOne.statValueLabel.textColor = pokemonTypeProperties.2
         
         if pokemon.abilities.count > 1 {
             abilityTwo.statLabel.text = "Hidden Ability"
             abilityTwo.statValueLabel.text = PokemonPropertiesFunctions.capitalizingFirstLetter(name: pokemon.abilities[1].ability.name)
+            abilityTwo.statValueLabel.textColor = pokemonTypeProperties.2
         }
         
+        catchRate.statLabel.text = "Catch Rate"
+        catchRate.statValueLabel.text = String(species.captureRate)
+        
+        baseExp.statLabel.text = "Base Experience"
+        baseExp.statValueLabel.text = String(pokemon.baseExperience)
+        
+        growthRate.statLabel.text = "Growth Rate"
+        growthRate.statValueLabel.text = species.growthRate.name
 
     }
  
@@ -156,18 +195,23 @@ extension PokemonAboutView: UIViewLayout {
         addSubview(pokedexAbilities)
         addSubview(abilityOne)
         addSubview(abilityTwo)
+        
+        addSubview(trainingData)
+        addSubview(catchRate)
+        addSubview(baseExp)
+        addSubview(growthRate)
     }
     
     func setupConstraints() {
         pokemonDescription.topAnchor.constraint(equalTo: self.topAnchor, constant: 30).isActive = true
         pokemonDescription.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 30).isActive = true
-//        pokemonDescription.heightAnchor.constraint(equalToConstant: 100).isActive = true
+
         pokemonDescription.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -30).isActive = true
         
         pokedexData.topAnchor.constraint(equalTo: pokemonDescription.bottomAnchor, constant: 20).isActive = true
         pokedexData.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 30).isActive = true
         
-        speciesStat.topAnchor.constraint(equalTo: pokedexData.bottomAnchor, constant: 30).isActive = true
+        speciesStat.topAnchor.constraint(equalTo: pokedexData.bottomAnchor, constant: 22).isActive = true
         speciesStat.heightAnchor.constraint(equalToConstant: 20).isActive = true
         speciesStat.leftAnchor.constraint(equalTo: pokedexData.leftAnchor).isActive = true
         speciesStat.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -70).isActive = true
@@ -182,10 +226,10 @@ extension PokemonAboutView: UIViewLayout {
         heightStat.leftAnchor.constraint(equalTo: pokedexData.leftAnchor).isActive = true
         heightStat.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -70).isActive = true
         
-        pokedexAbilities.topAnchor.constraint(equalTo: heightStat.bottomAnchor, constant: 30).isActive = true
+        pokedexAbilities.topAnchor.constraint(equalTo: heightStat.bottomAnchor, constant: 20).isActive = true
         pokedexAbilities.leftAnchor.constraint(equalTo: pokedexData.leftAnchor).isActive = true
         
-        abilityOne.topAnchor.constraint(equalTo: pokedexAbilities.bottomAnchor, constant: 30).isActive = true
+        abilityOne.topAnchor.constraint(equalTo: pokedexAbilities.bottomAnchor, constant: 22).isActive = true
         abilityOne.heightAnchor.constraint(equalToConstant: 20).isActive = true
         abilityOne.leftAnchor.constraint(equalTo: pokedexData.leftAnchor).isActive = true
         abilityOne.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -70).isActive = true
@@ -194,6 +238,25 @@ extension PokemonAboutView: UIViewLayout {
         abilityTwo.heightAnchor.constraint(equalToConstant: 20).isActive = true
         abilityTwo.leftAnchor.constraint(equalTo: pokedexData.leftAnchor).isActive = true
         abilityTwo.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -70).isActive = true
+        
+        trainingData.topAnchor.constraint(equalTo: abilityTwo.bottomAnchor, constant: 20).isActive = true
+        trainingData.leftAnchor.constraint(equalTo: pokedexData.leftAnchor).isActive = true
+        
+        catchRate.topAnchor.constraint(equalTo: trainingData.bottomAnchor, constant: 20).isActive = true
+        catchRate.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        catchRate.leftAnchor.constraint(equalTo: pokedexData.leftAnchor).isActive = true
+        catchRate.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -70).isActive = true
+        
+        baseExp.topAnchor.constraint(equalTo: catchRate.bottomAnchor, constant: 10).isActive = true
+        baseExp.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        baseExp.leftAnchor.constraint(equalTo: pokedexData.leftAnchor).isActive = true
+        baseExp.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -70).isActive = true
+
+        growthRate.topAnchor.constraint(equalTo: baseExp.bottomAnchor, constant: 10).isActive = true
+        growthRate.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        growthRate.leftAnchor.constraint(equalTo: pokedexData.leftAnchor).isActive = true
+        growthRate.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -70).isActive = true
+        
     }
     
     func setupViews() {
