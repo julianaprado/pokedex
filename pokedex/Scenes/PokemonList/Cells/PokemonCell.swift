@@ -33,7 +33,7 @@ class PokemonCell: UICollectionViewCell{
     }()
     
     
-    
+    var representedIdentifier: Int = -1
     ///Function called inside prepare for reuse
     var onReuse: () -> Void = {}
     

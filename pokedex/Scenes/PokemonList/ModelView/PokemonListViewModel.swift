@@ -101,11 +101,16 @@ extension PokemonListViewModel: UICollectionViewDelegate, UICollectionViewDataSo
                         pokemonId: PokemonPropertiesFunctions.applyMaskToPokemonId(with: pokemon.id),
                         pokemonName: PokemonPropertiesFunctions.capitalizingFirstLetter(name: pokemon.name)
         )
+        cell?.imageView.image = nil
+        let representedIdentifier = pokemon.id
+        cell?.representedIdentifier = representedIdentifier
         PokedexApiManager.shared.fetchPokemonImage(url: pokemon.sprites.other.officialArtwork.frontDefault) { data in
             if let data = data {
                 let image = UIImage(data: data)
                 DispatchQueue.main.async {
-                    cell?.imageView.image = image
+                    if (cell?.representedIdentifier == representedIdentifier) {
+                        cell?.imageView.image = image
+                    }
                 }
             }
         }
