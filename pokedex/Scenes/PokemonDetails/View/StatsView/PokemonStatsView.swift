@@ -81,22 +81,22 @@ class PokemonStatsView: UIView{
     func setupStats(pokemon: IndividualPokemon, species: PokemonSpecies, pokemonColor: UIColor){
         baseStat.textColor = pokemonColor
         
-        hpStat.statLabel.text = pokemon.stats[0].stat.name
+        hpStat.statLabel.text = PokemonPropertiesFunctions.capitalizingFirstLetter(name:  pokemon.stats[0].stat.name)
         hpStat.statValueLabel.text = String(pokemon.stats[0].baseStat)
         
-        attackStat.statLabel.text = pokemon.stats[1].stat.name
+        attackStat.statLabel.text = PokemonPropertiesFunctions.capitalizingFirstLetter(name: pokemon.stats[1].stat.name)
         attackStat.statValueLabel.text = String(pokemon.stats[1].baseStat)
         
-        defenseStat.statLabel.text = pokemon.stats[2].stat.name
+        defenseStat.statLabel.text = PokemonPropertiesFunctions.capitalizingFirstLetter(name: pokemon.stats[2].stat.name)
         defenseStat.statValueLabel.text = String(pokemon.stats[2].baseStat)
         
-        specialAttackStat.statLabel.text = pokemon.stats[3].stat.name
+        specialAttackStat.statLabel.text = StringConstants.specialAttack
         specialAttackStat.statValueLabel.text = String(pokemon.stats[3].baseStat)
         
-        specialDefenseStat.statLabel.text = pokemon.stats[4].stat.name
+        specialDefenseStat.statLabel.text = StringConstants.specialDefense
         specialDefenseStat.statValueLabel.text = String(pokemon.stats[4].baseStat)
         
-        speedStat.statLabel.text = pokemon.stats[5].stat.name
+        speedStat.statLabel.text = PokemonPropertiesFunctions.capitalizingFirstLetter(name: pokemon.stats[5].stat.name)
         speedStat.statValueLabel.text = String(pokemon.stats[5].baseStat)
     }
     
@@ -140,7 +140,7 @@ extension PokemonStatsView: UIViewLayout {
         specialAttackStat.leftAnchor.constraint(equalTo: baseStat.leftAnchor).isActive = true
         specialAttackStat.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 0).isActive = true
         
-        specialDefenseStat.topAnchor.constraint(equalTo: specialAttackStat.bottomAnchor, constant: 30).isActive = true
+        specialDefenseStat.topAnchor.constraint(equalTo: specialAttackStat.bottomAnchor, constant: 10).isActive = true
         specialDefenseStat.heightAnchor.constraint(equalToConstant: 20).isActive = true
         specialDefenseStat.leftAnchor.constraint(equalTo: baseStat.leftAnchor).isActive = true
         specialDefenseStat.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 0).isActive = true

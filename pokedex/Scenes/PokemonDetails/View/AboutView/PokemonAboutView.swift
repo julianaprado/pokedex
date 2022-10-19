@@ -144,10 +144,10 @@ class PokemonAboutView: UIView {
         }
         
         weightStat.statLabel.text = "Weight"
-        weightStat.statValueLabel.text = String(pokemon.weight) + " kg"
+        weightStat.statValueLabel.text = String(pokemon.weight/10) + " kg"
         
         heightStat.statLabel.text = "Height"
-        heightStat.statValueLabel.text = String(pokemon.height) + " cm"
+        heightStat.statValueLabel.text = String(pokemon.height * 10) + " cm"
         
         abilityOne.statLabel.text = "Ability"
         abilityOne.statValueLabel.text = PokemonPropertiesFunctions.capitalizingFirstLetter(name: pokemon.abilities[0].ability.name)
@@ -160,7 +160,7 @@ class PokemonAboutView: UIView {
         }
         
         catchRate.statLabel.text = "Catch Rate"
-        catchRate.statValueLabel.text = String(species.captureRate)
+        catchRate.statValueLabel.text = String((species.captureRate*100)/255) + "%"
         
         baseExp.statLabel.text = "Base Experience"
         baseExp.statValueLabel.text = String(pokemon.baseExperience)

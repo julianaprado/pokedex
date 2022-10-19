@@ -15,11 +15,15 @@ class PokemonDetailsView: UIView {
     private var species: PokemonSpecies?
     
     lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 5
-        layout.minimumInteritemSpacing = 5
-        layout.scrollDirection = .horizontal
-        let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
+        layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(150))
+        let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutGroupSize, subitems: [layoutItem])
+        let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+        layoutSection.orthogonalScrollingBehavior = .groupPagingCentered
+        let compositionalLayout = UICollectionViewCompositionalLayout(section: layoutSection)
+        let collection = UICollectionView(frame: .zero, collectionViewLayout: compositionalLayout)
         collection.register(PokemonDetailsCell.self, forCellWithReuseIdentifier: PokemonDetailsCell.identifier)
         collection.backgroundColor = .clear
         collection.showsVerticalScrollIndicator = true

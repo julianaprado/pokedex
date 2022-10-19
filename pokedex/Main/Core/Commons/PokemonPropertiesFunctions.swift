@@ -20,6 +20,13 @@ class PokemonPropertiesFunctions {
         return mask.dropLast(idAsString.count) + idAsString
     }
     
+    static func capitalizeBaseStats(stat: String) -> String {
+        let word = stat.split(separator: "-")
+        let first = capitalizingFirstLetter(name: String(word[0]))
+        let second = capitalizingFirstLetter(name: String(word[1]))
+        return first + " " + second
+    }
+    
     /// Recieves type and returns its corresponding properties
     /// - Parameter type: A pokemon type
     /// - Returns: tuple containing:

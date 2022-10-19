@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 
 class PokemonDetailsModelView: NSObject {
+
+    
     
     weak var viewController: PokemonDetailsViewController?
     private let view = PokemonDetailsView()
@@ -37,15 +39,22 @@ class PokemonDetailsModelView: NSObject {
         
         self.view.collectionView.delegate = self
         self.view.collectionView.dataSource = self
+        self.view.collectionView.dragDelegate = self
     }
     
     func getView() -> PokemonDetailsView{
         return self.view
     }
     
+    func snapToCenter() {
+        let centerPoint = view.collectionView.center
+        guard let centerIndexPath = view.collectionView.indexPathForItem(at: centerPoint) else { return }
+        view.collectionView.scrollToItem(at: centerIndexPath, at: .centeredHorizontally, animated: true)
+      }
+    
 }
 
-extension PokemonDetailsModelView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension PokemonDetailsModelView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDragDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return sprites.count
@@ -53,6 +62,8 @@ extension PokemonDetailsModelView: UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = self.view.collectionView.dequeueReusableCell(withReuseIdentifier: PokemonDetailsCell.identifier, for: indexPath) as? PokemonDetailsCell else { return UICollectionViewCell() }
+        
+        
         
         PokedexApiManager.shared.fetchPokemonImage(url: sprites[indexPath.row]) { data in
             if let data = data {
@@ -66,6 +77,23 @@ extension PokemonDetailsModelView: UICollectionViewDelegate, UICollectionViewDat
         return cell
     }
     
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        snapToCenter()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        return []
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+          
+       }
+       
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+           if !decelerate {
+               snapToCenter()
+           }
+       }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: self.view.collectionView.bounds.width, height: 150)
        }

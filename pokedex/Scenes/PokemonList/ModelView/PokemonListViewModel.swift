@@ -20,7 +20,7 @@ class PokemonListViewModel: NSObject {
             }
         }
     }
-    var semaphore = false
+    var isAlreadyLoading = true
     
     private let view = PokemonListView()
     
@@ -76,7 +76,6 @@ extension PokemonListViewModel: PokemonListViewModelDelegate {
             self.pokemons.removeAll()
             self.results = nil 
             fetchData()
-            semaphore = true
         }
     }
     
@@ -141,11 +140,20 @@ extension PokemonListViewModel: UICollectionViewDelegate, UICollectionViewDataSo
         
         if offsetY > height - scrollView.frame.size.height {
             guard let next = results?.next else { return }
-            PokedexApiManager.shared.fechNextBatch(url: next, completion: { [weak self] results in
-                self?.results = results
-                self?.fetchPokemons(results: results.results)
-                self?.view.collectionView.reloadData()
-            })
+            let dispatchGroup = DispatchGroup()
+            if isAlreadyLoading {
+            dispatchGroup.enter()
+                PokedexApiManager.shared.fechNextBatch(url: next, completion: { [weak self] results in
+                    self?.isAlreadyLoading = true
+                    self?.results = results
+                    self?.fetchPokemons(results: results.results)
+                    dispatchGroup.leave()
+                })
+            }
+            dispatchGroup.notify(queue: .main) {
+                self.isAlreadyLoading = false
+                self.view.collectionView.reloadData()
+            }
         }
     }
     
