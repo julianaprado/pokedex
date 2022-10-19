@@ -74,6 +74,7 @@ extension PokemonListViewModel: PokemonListViewModelDelegate {
         self.view.placeholderLabel.textColor = .gray
         if pokemons.count <= 1 {
             self.pokemons.removeAll()
+            self.results = nil 
             fetchData()
             semaphore = true
         }
