@@ -144,14 +144,14 @@ extension PokemonListViewModel: UICollectionViewDelegate, UICollectionViewDataSo
             if isAlreadyLoading {
             dispatchGroup.enter()
                 PokedexApiManager.shared.fechNextBatch(url: next, completion: { [weak self] results in
-                    self?.isAlreadyLoading = true
+                    self?.isAlreadyLoading = false
                     self?.results = results
                     self?.fetchPokemons(results: results.results)
                     dispatchGroup.leave()
                 })
             }
             dispatchGroup.notify(queue: .main) {
-                self.isAlreadyLoading = false
+                self.isAlreadyLoading = true
                 self.view.collectionView.reloadData()
             }
         }
